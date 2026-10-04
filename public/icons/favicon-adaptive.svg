@@ -1,0 +1,79 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+  <!--
+    این فاواآیکون خودش با تم سیستم/مرورگر هماهنگ می‌شود: مرورگرهای مدرن
+    (کروم، فایرفاکس) داخل SVG فاواآیکون هم به @media (prefers-color-scheme)
+    احترام می‌گذارند، پس نیازی به دو فایل جدا و لینک جداگانه در index.html
+    نیست — یک فایل، خودش تشخیص می‌دهد.
+
+    گروه light-mode: همان طرح قبلی (پس‌زمینهٔ نارنجی، نوار وسط به‌صورت
+    برش/negative-space از همان نارنجی).
+    گروه dark-mode: پس‌زمینهٔ تیرهٔ هماهنگ با سطوح دارک + حلقهٔ نازک نارنجی
+    برند دور کلاه، به‌جای پرشدگی کامل نارنجی که در محیط تاریک زننده است.
+  -->
+  <style>
+    .dark-mode { display: none; }
+    @media (prefers-color-scheme: dark) {
+      .light-mode { display: none; }
+      .dark-mode { display: inline; }
+    }
+  </style>
+
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FF9142"/>
+      <stop offset="55%" stop-color="#FF7A00"/>
+      <stop offset="100%" stop-color="#E85F00"/>
+    </linearGradient>
+    <linearGradient id="dome" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#323F55"/>
+      <stop offset="100%" stop-color="#131924"/>
+    </linearGradient>
+    <linearGradient id="brim" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#FFFFFF"/>
+      <stop offset="100%" stop-color="#DEE4EC"/>
+    </linearGradient>
+    <radialGradient id="sheen" cx="30%" cy="20%" r="65%">
+      <stop offset="0%" stop-color="#FFFFFF" stop-opacity="0.3"/>
+      <stop offset="45%" stop-color="#FFFFFF" stop-opacity="0.06"/>
+      <stop offset="100%" stop-color="#FFFFFF" stop-opacity="0"/>
+    </radialGradient>
+
+    <linearGradient id="bgDark" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1C2430"/>
+      <stop offset="55%" stop-color="#131924"/>
+      <stop offset="100%" stop-color="#0B0F16"/>
+    </linearGradient>
+    <linearGradient id="domeDark" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#3D4A63"/>
+      <stop offset="100%" stop-color="#1B2230"/>
+    </linearGradient>
+    <linearGradient id="accentOrange" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FFA85C"/>
+      <stop offset="100%" stop-color="#FF7A00"/>
+    </linearGradient>
+  </defs>
+
+  <!-- ===== حالت روشن ===== -->
+  <g class="light-mode">
+    <rect width="100" height="100" rx="24" fill="url(#bg)"/>
+    <rect width="100" height="100" rx="24" fill="url(#sheen)"/>
+    <path
+      d="M 20 52.5 A 30 30 0 0 1 80 52.5 L 80 55.5 A 30.5 6.2 0 0 1 50 61.7 A 30.5 6.2 0 0 1 20 55.5 Z"
+      fill="url(#dome)"
+    />
+    <rect x="45.5" y="25" width="9" height="17" rx="4.5" fill="url(#bg)"/>
+    <ellipse cx="50" cy="55.5" rx="31.5" ry="6.4" fill="url(#brim)"/>
+  </g>
+
+  <!-- ===== حالت تاریک ===== -->
+  <g class="dark-mode">
+    <rect width="100" height="100" rx="24" fill="url(#bgDark)"/>
+    <circle cx="50" cy="50" r="46" fill="none" stroke="url(#accentOrange)" stroke-width="2.4" opacity="0.9"/>
+    <path
+      d="M 20 52.5 A 30 30 0 0 1 80 52.5 L 80 55.5 A 30.5 6.2 0 0 1 50 61.7 A 30.5 6.2 0 0 1 20 55.5 Z"
+      fill="url(#domeDark)"
+    />
+    <rect x="45.5" y="25" width="9" height="17" rx="4.5" fill="url(#accentOrange)"/>
+    <ellipse cx="50" cy="55.5" rx="31.5" ry="6.4" fill="url(#brim)"/>
+  </g>
+</svg>

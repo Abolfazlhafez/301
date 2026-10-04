@@ -1,0 +1,81 @@
+apply plugin: 'com.android.application'
+
+android {
+    namespace "ir.karegahyar.app"
+    compileSdk rootProject.ext.compileSdkVersion
+    defaultConfig {
+        applicationId "ir.karegahyar.app"
+        minSdkVersion rootProject.ext.minSdkVersion
+        targetSdkVersion rootProject.ext.targetSdkVersion
+        // نکتهٔ مهم: قبلاً این عدد همیشه ۱ ثابت مانده بود، در نتیجه اندروید هر
+        // بیلد جدید را «نسخهٔ برابر یا قدیمی‌تر» تشخیص می‌داد و نصب روی نسخهٔ
+        // قبلی (Update) را رد می‌کرد — کاربر مجبور بود اول اپ را پاک کند.
+        // از این به بعد، هر انتشار جدید باید این عدد را افزایش دهد (حتی یک
+        // واحد کافی است)؛ versionName صرفاً نمایشی است و اجباری نیست افزایش یابد.
+        versionCode 10
+        versionName "1.5.0"
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        aaptOptions {
+             // Files and dirs to omit from the packaged assets dir, modified to accommodate modern web apps.
+             // Default: https://android.googlesource.com/platform/frameworks/base/+/282e181b58cf72b6ca770dc7ca5f91f135444502/tools/aapt/AaptAssets.cpp#61
+            ignoreAssetsPattern '!.svn:!.git:!.ds_store:!*.scc:.*:!CVS:!thumbs.db:!picasa.ini:!*~'
+        }
+    }
+    // کلید امضای ثابت انتشار — نکتهٔ اصلی این بخش این است که این کلید هرگز
+    // نباید تغییر کند. قبلاً هیچ signingConfig برای release تعریف نشده بود، و
+    // بیلد CI هم اصلاً APK دیباگ می‌ساخت (گردش‌کار build-android.yml،
+    // assembleDebug)؛ APK دیباگ با یک کلید موقت و *متفاوت در هر اجرای CI*
+    // امضا می‌شود. همین دو مورد با هم دقیقاً باعث هر دو باگ زیر می‌شدند:
+    //  ۱. چون امضای هر نسخه با نسخهٔ قبلی فرق داشت، اندروید نصب Update را رد
+    //     می‌کرد (حتی اگر versionCode درست بود) و کاربر باید اول Uninstall می‌کرد.
+    //  ۲. Google Play Protect، APKهای امضاشده با کلید دیباگ (و debuggable=true)
+    //     را — به‌خصوص وقتی خارج از Play Store نصب می‌شوند — به‌عنوان مشکوک/
+    //     ناامن علامت‌گذاری می‌کند، چون این الگو دقیقاً امضای رایج بدافزارهای
+    //     سایدلود است.
+    // راه‌حل: یک کیستور ثابت (karegah-yar-release.keystore، همراه پروژه نگه
+    // داشته می‌شود) که هر بیلد release با همان کلید امضا شود.
+    signingConfigs {
+        release {
+            storeFile file("karegah-yar-release.keystore")
+            storePassword "KaregahYar2026Release!"
+            keyAlias "karegah-yar"
+            keyPassword "KaregahYar2026Release!"
+        }
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.release
+        }
+    }
+}
+
+repositories {
+    flatDir{
+        dirs '../capacitor-cordova-android-plugins/src/main/libs', 'libs'
+    }
+}
+
+dependencies {
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    implementation "androidx.appcompat:appcompat:$androidxAppCompatVersion"
+    implementation "androidx.coordinatorlayout:coordinatorlayout:$androidxCoordinatorLayoutVersion"
+    implementation "androidx.core:core-splashscreen:$coreSplashScreenVersion"
+    implementation project(':capacitor-android')
+    testImplementation "junit:junit:$junitVersion"
+    androidTestImplementation "androidx.test.ext:junit:$androidxJunitVersion"
+    androidTestImplementation "androidx.test.espresso:espresso-core:$androidxEspressoCoreVersion"
+    implementation project(':capacitor-cordova-android-plugins')
+}
+
+apply from: 'capacitor.build.gradle'
+
+try {
+    def servicesJSON = file('google-services.json')
+    if (servicesJSON.text) {
+        apply plugin: 'com.google.gms.google-services'
+    }
+} catch(Exception e) {
+    logger.info("google-services.json not found, google-services plugin not applied. Push Notifications won't work")
+}

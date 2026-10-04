@@ -1,0 +1,14 @@
+{
+	"appId": "ir.karegahyar.app",
+	"appName": "کارگاه‌یار",
+	"webDir": "dist",
+	"server": {
+		"androidScheme": "https"
+	},
+	"plugins": {
+		"LocalNotifications": {
+			"smallIcon": "ic_stat_notify",
+			"iconColor": "#FF7A00"
+		}
+	}
+}

@@ -1,0 +1,42 @@
+@import url("https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css");
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  /* جلوگیری از افکت کشِ لاستیکی/باندس در کل صفحه — این تنها روی body کافی
+     نیست چون صفحه‌بندی اصلی اپ (AppLayout) خودش یک ناحیهٔ اسکرول‌شوندهٔ
+     تودرتوی جداگانه دارد؛ آن ناحیه هم جداگانه همین قانون را می‌گیرد. */
+  overscroll-behavior: none;
+}
+
+body {
+  font-family: "Vazirmatn", "Roboto", "Arial", sans-serif;
+  direction: rtl;
+  -webkit-tap-highlight-color: transparent;
+  overscroll-behavior-y: none;
+}
+
+/* حذف کامل نوار اسکرول در همه‌جای اپ — این یک اپلیکیشن بومی اندرویدی
+   (Capacitor) با تعامل کاملاً لمسی است، نه یک صفحهٔ وب دسکتاپی؛ نوار اسکرول
+   دیداری در این‌جا کاربردی ندارد (اسکرول با لمس/کشیدن انجام می‌شود، نه با
+   نشانه‌گر ماوس) و صرفاً یک قلم بصری اضافه است. حذف آن هم اپ را هم‌شکل
+   اپ‌های بومی می‌کند، هم یک باگ ظاهری واقعی را برطرف می‌کند: چون صفحه RTL
+   است، این نوار روی لبهٔ چپ صفحه (لبهٔ «پایان» منطقی) رندر می‌شد، اما دقیقاً
+   نصفش بیرون از کادر دیده‌بودی (viewport) قرار می‌گرفت — یعنی یک تکهٔ
+   بیضی‌شکل خاکستری که انگار از لبهٔ صفحه بیرون زده، چسبیده می‌ماند. */
+::-webkit-scrollbar {
+  display: none;
+  width: 0;
+  height: 0;
+}
+
+* {
+  scrollbar-width: none;
+}

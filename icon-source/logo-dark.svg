@@ -1,0 +1,58 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+  <!--
+    نسخهٔ لوگوی «کارگاه‌یار» مخصوص حالت تاریک.
+
+    نسخهٔ اصلی (icon-source/adaptive-background.svg) یک دایرهٔ نارنجی پرنور
+    دارد که روی پس‌زمینهٔ تیره خیلی درخشان/چشم‌آزار به‌نظر می‌رسد و با
+    سطوح تیرهٔ متریال هماهنگ نیست. در این نسخه:
+      - پس‌زمینه به‌جای نارنجی پرنور، یک سطح تیرهٔ نزدیک به رنگ گنبد کلاه
+        (همان پالت برند) شده تا در محیط تاریک ادغام شود، نه این‌که رویش بزند.
+      - رنگ نارنجی برند به‌صورت یک حلقهٔ نازک دور کلاه + نوار وسط گنبد
+        (که در نسخهٔ اصلی هم بود) حفظ شده تا هویت برند از دست نرود.
+      - لبهٔ سفید کلاه دست‌نخورده مانده چون در هر دو حالت روشن/تاریک خوانا
+        و پرکنتراست است.
+  -->
+  <defs>
+    <linearGradient id="bgDark" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1C2430"/>
+      <stop offset="55%" stop-color="#131924"/>
+      <stop offset="100%" stop-color="#0B0F16"/>
+    </linearGradient>
+    <linearGradient id="domeDark" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#3D4A63"/>
+      <stop offset="100%" stop-color="#1B2230"/>
+    </linearGradient>
+    <linearGradient id="brimDark" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#FFFFFF"/>
+      <stop offset="100%" stop-color="#DEE4EC"/>
+    </linearGradient>
+    <linearGradient id="accentOrange" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FFA85C"/>
+      <stop offset="100%" stop-color="#FF7A00"/>
+    </linearGradient>
+    <radialGradient id="sheenDark" cx="30%" cy="20%" r="65%">
+      <stop offset="0%" stop-color="#FFFFFF" stop-opacity="0.08"/>
+      <stop offset="45%" stop-color="#FFFFFF" stop-opacity="0.02"/>
+      <stop offset="100%" stop-color="#FFFFFF" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+
+  <!-- پس‌زمینه: سطح تیره به‌جای نارنجی پرنور -->
+  <rect width="100" height="100" fill="url(#bgDark)"/>
+  <rect width="100" height="100" fill="url(#sheenDark)"/>
+
+  <!-- حلقهٔ نازک نارنجی برند، دور دایره — جایگزین «پرشدگی نارنجی» نسخهٔ روشن -->
+  <circle cx="50" cy="50" r="46" fill="none" stroke="url(#accentOrange)" stroke-width="2.4" opacity="0.9"/>
+
+  <!-- کلاه ایمنی -->
+  <path
+    d="M 20 52.5
+       A 30 30 0 0 1 80 52.5
+       L 80 55.5 A 30.5 6.2 0 0 1 50 61.7
+       A 30.5 6.2 0 0 1 20 55.5
+       Z"
+    fill="url(#domeDark)"
+  />
+  <rect x="45.5" y="25" width="9" height="17" rx="4.5" fill="url(#accentOrange)"/>
+  <ellipse cx="50" cy="55.5" rx="31.5" ry="6.4" fill="url(#brimDark)"/>
+</svg>

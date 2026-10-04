@@ -1,0 +1,64 @@
+name: Build Android APK
+
+on:
+  push:
+    branches: [main, master]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: چک‌اوت مخزن
+        uses: actions/checkout@v4
+
+      - name: راه‌اندازی Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: نصب وابستگی‌ها
+        run: npm ci
+
+      - name: بررسی Lint
+        run: npm run lint
+
+      - name: بیلد وب (TypeScript + Vite)
+        run: npm run build
+
+      - name: همگام‌سازی پروژه اندروید با Capacitor
+        run: npx cap sync android
+
+      - name: راه‌اندازی JDK ۱۷
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "17"
+
+      # نکته: مقدار پیش‌فرض ورودی packages در این اکشن «tools platform-tools» است و
+      # پکیج «tools» در cmdline-tools نسخهٔ ۱۶ دیگر وجود ندارد (خطای
+      # «Failed to find package 'tools'» و exit code 1). پس صریحاً فقط پکیج‌های
+      # لازم را می‌دهیم؛ compileSdk=34 در android/variables.gradle است.
+      - name: راه‌اندازی Android SDK
+        uses: android-actions/setup-android@v3
+        with:
+          packages: "platform-tools platforms;android-34 build-tools;34.0.0"
+
+      # نکته: عمداً assembleRelease می‌سازیم، نه assembleDebug — چون APK دیباگ با
+      # یک کلید موقت *متفاوت در هر اجرای CI* امضا می‌شود و همین باعث می‌شد نصبِ
+      # نسخه‌ی جدید روی نسخه‌ی قبلی رد شود (و Play Protect آن را مشکوک علامت بزند).
+      # اینجا با کیستور ثابت پروژه (signingConfigs.release در android/app/build.gradle)
+      # امضا می‌شود تا همه‌ی نسخه‌ها یک امضای یکسان داشته باشند.
+      - name: ساخت APK نهایی (Release، امضاشده)
+        working-directory: android
+        run: |
+          chmod +x gradlew
+          ./gradlew assembleRelease --no-daemon
+
+      - name: آپلود APK به‌عنوان Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: karegah-yar-apk
+          path: android/app/build/outputs/apk/release/*.apk
+          if-no-files-found: error

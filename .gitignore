@@ -1,0 +1,29 @@
+# وابستگی‌ها
+node_modules/
+
+# خروجی بیلد وب
+dist/
+dist-ssr/
+*.local
+
+# اندروید — توجه: خودِ پوشه‌ی android/ باید Commit شود (لازمهٔ Build در GitHub Actions است).
+# فقط زیرمسیرهای تولیدی/محلیِ داخل آن مستثنا می‌شوند:
+android/build/
+android/app/build/
+android/.gradle/
+android/capacitor-cordova-android-plugins/build/
+android/local.properties
+
+# لاگ‌ها
+*.log
+npm-debug.log*
+
+# ادیتور / سیستم‌عامل
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# متغیرهای محیطی محلی
+.env
+.env.local

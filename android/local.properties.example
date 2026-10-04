@@ -1,0 +1,3 @@
+## این فایل را کپی کنید به «local.properties» (بدون .example) و مسیر SDK اندروید خودتان را بگذارید.
+## «local.properties» شخصی/محلی است و هرگز نباید Push شود (در .gitignore ریشه پروژه مستثنا شده).
+sdk.dir=/path/to/your/Android/sdk
